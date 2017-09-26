@@ -18,9 +18,8 @@
 #include "svd.h"
 
 namespace svd {
-
 	template<typename T>
-	T svd(cusolverDnHandle_t handle,
+	int RunSvd(cusolverDnHandle_t handle,
 			signed char jobu,
 			signed char jobvt,
 			int m,
@@ -107,5 +106,199 @@ namespace svd {
 
 		return 0;
 	}
+
+	template<typename T> int makePtr_dense(
+			cusolverDnHandle_t handle,
+						signed char jobu,
+						signed char jobvt,
+						int m,
+						int n,
+						double *A,
+						int lda,
+						double *S,
+						double *U,
+						int ldu,
+						double *VT,
+						int ldvt,
+						double *work,
+						int lwork,
+						double *rwork,
+						int *info ) {
+		//cusolverDnHandle_t, signed char, signed char, int, int, double, int, double, double, int, double, int, double, int, double, int
+		return RunSvd(handle,
+			jobu,
+			jobvt,
+			m,
+			n,
+			*A,
+			lda,
+			*S,
+			*U,
+			ldu,
+			*VT,
+			ldvt,
+			*work,
+			lwork,
+			*rwork,
+			*info );
+	}
+
+	template int makePtr_dense<float>(
+			cusolverDnHandle_t handle,
+						signed char jobu,
+						signed char jobvt,
+						int m,
+						int n,
+						double *A,
+						int lda,
+						double *S,
+						double *U,
+						int ldu,
+						double *VT,
+						int ldvt,
+						double *work,
+						int lwork,
+						double *rwork,
+						int *info );
+
+	template int makePtr_dense<double>(
+			cusolverDnHandle_t handle,
+						signed char jobu,
+						signed char jobvt,
+						int m,
+						int n,
+						double *A,
+						int lda,
+						double *S,
+						double *U,
+						int ldu,
+						double *VT,
+						int ldvt,
+						double *work,
+						int lwork,
+						double *rwork,
+						int *info );
+
+	template int RunSvd<float>(
+			cusolverDnHandle_t handle,
+						signed char jobu,
+						signed char jobvt,
+						int m,
+						int n,
+						double *A,
+						int lda,
+						double *S,
+						double *U,
+						int ldu,
+						double *VT,
+						int ldvt,
+						double *work,
+						int lwork,
+						double *rwork,
+						int *info );
+
+	template int
+	RunSvd<double>(
+			cusolverDnHandle_t handle,
+						signed char jobu,
+						signed char jobvt,
+						int m,
+						int n,
+						double *A,
+						int lda,
+						double *S,
+						double *U,
+						int ldu,
+						double *VT,
+						int ldvt,
+						double *work,
+						int lwork,
+						double *rwork,
+						int *info );
 }
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*
+ * Interface for other languages
+ */
+
+int make_ptr_float_svd(
+		cusolverDnHandle_t handle,
+					signed char jobu,
+					signed char jobvt,
+					int m,
+					int n,
+					double *A,
+					int lda,
+					double *S,
+					double *U,
+					int ldu,
+					double *VT,
+					int ldvt,
+					double *work,
+					int lwork,
+					double *rwork,
+					int *info ) {
+  return svd::makePtr_dense<float>(
+		  	handle,
+			jobu,
+			jobvt,
+			m,
+			n,
+			*A,
+			lda,
+			*S,
+			*U,
+			ldu,
+			*VT,
+			ldvt,
+			*work,
+			lwork,
+			*rwork,
+			*info );
+}
+
+int make_ptr_double_svd(
+		cusolverDnHandle_t handle,
+					signed char jobu,
+					signed char jobvt,
+					int m,
+					int n,
+					double *A,
+					int lda,
+					double *S,
+					double *U,
+					int ldu,
+					double *VT,
+					int ldvt,
+					double *work,
+					int lwork,
+					double *rwork,
+					int *info ) {
+  return svd::makePtr_dense<double>(
+		    handle,
+			jobu,
+			jobvt,
+			m,
+			n,
+			*A,
+			lda,
+			*S,
+			*U,
+			ldu,
+			*VT,
+			ldvt,
+			*work,
+			lwork,
+			*rwork,
+			*info );
+}
+
+#ifdef __cplusplus
+}
+#endif
+
 

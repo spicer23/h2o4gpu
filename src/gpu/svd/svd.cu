@@ -44,8 +44,8 @@ namespace svd {
 	//    const int n = 5;
 	//
 	//    // --- cuSOLVE input/output parameters/arrays
-	//    int work_size = 0;
-	//    int *devInfo;           gpuErrchk(cudaMalloc(&devInfo,          sizeof(int)));
+	//    int lwork = 0;
+	//    int *info;           gpuErrchk(cudaMalloc(&info,          sizeof(int)));
 
 		// --- CUDA solver initialization
 		cusolverDnHandle_t solver_handle;
@@ -72,13 +72,13 @@ namespace svd {
 		double *d_S;            gpuErrchk(cudaMalloc(&d_S,  min(m, n) * sizeof(double)));
 
 		// --- CUDA SVD initialization
-		cusolveSafeCall(cusolverDnDgesvd_bufferSize(solver_handle, m, n, &work_size));
-		gpuErrchk(cudaMalloc(&work, work_size * sizeof(double)));
+		cusolveSafeCall(cusolverDnDgesvd_bufferSize(solver_handle, m, n, &lwork));
+		gpuErrchk(cudaMalloc(&work, lwork * sizeof(double)));
 
 		// --- CUDA SVD execution
-		cusolveSafeCall(cusolverDnDgesvd(solver_handle, 'A', 'A', m, n, d_A, m, d_S, d_U, m, d_V, n, work, work_size, NULL, devInfo));
-		int devInfo_h = 0;  gpuErrchk(cudaMemcpy(&devInfo_h, devInfo, sizeof(int), cudaMemcpyDeviceToHost));
-		if (devInfo_h != 0) std::cout   << "Unsuccessful SVD execution\n\n";
+		cusolveSafeCall(cusolverDnDgesvd(solver_handle, 'A', 'A', m, n, d_A, m, d_S, d_U, m, d_V, n, work, lwork, NULL, info));
+		int info_h = 0;  gpuErrchk(cudaMemcpy(&info_h, info, sizeof(int), cudaMemcpyDeviceToHost));
+		if (info_h != 0) std::cout   << "Unsuccessful SVD execution\n\n";
 
 		// --- Moving the results from device to host
 		gpuErrchk(cudaMemcpy(h_S, d_S, min(m, n) * sizeof(double), cudaMemcpyDeviceToHost));

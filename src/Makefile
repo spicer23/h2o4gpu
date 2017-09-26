@@ -268,9 +268,6 @@ $(OBJDIR)/gpu/kmeans/*.o: gpu/kmeans/*.cu $(GPU_KMEANS_HDR) | $(OBJDIR)/gpu/kmea
 $(OBJDIR)/gpu/kmeans/kmeans_h2o4gpu.o: gpu/kmeans/kmeans_h2o4gpu.cu $(GPU_KMEANS_HDR) | $(OBJDIR)/gpu/kmeans Makefile config2.mk
 	$(CUXX) -Iinclude -Igpu/include $< $(CUFLAGS) -dc -o $@
 
-$(OBJDIR)/gpu/svd/*.o: gpu/svd/*.cu $(GPU_SVD_HDR) | $(OBJDIR)/gpu/svd
-	$(CUXX) -Igpu/include $< $(CUFLAGS) $(IFLAGS) -dc -o $@
-
 $(OBJDIR)/gpu/svd/svd.o: gpu/svd/svd.cu $(GPU_SVD_HDR) | $(OBJDIR)/gpu/svd Makefile config2.mk
 	$(CUXX) -Iinclude -Igpu/include $< $(CUFLAGS) -dc -o $@
 

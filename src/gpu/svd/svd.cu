@@ -123,7 +123,6 @@ namespace svd {
 						int lwork,
 						double *rwork,
 						int *info ) {
-		//cusolverDnHandle_t, signed char, signed char, int, int, double, int, double, double, int, double, int, double, int, double, int
 		return svd_fit(handle,
 			jobu,
 			jobvt,

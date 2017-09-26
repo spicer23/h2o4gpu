@@ -19,7 +19,7 @@
 
 namespace svd {
 	template<typename T>
-	int RunSvd(cusolverDnHandle_t handle,
+	int svd_fit(cusolverDnHandle_t handle,
 			signed char jobu,
 			signed char jobvt,
 			int m,
@@ -47,8 +47,7 @@ namespace svd {
 	//    int *info;           gpuErrchk(cudaMalloc(&info,          sizeof(int)));
 
 		// --- CUDA solver initialization
-		cusolverDnHandle_t solver_handle;
-		cusolverDnCreate(&solver_handle);
+		cusolverDnCreate(&handle);
 
 		// --- Setting the host, m x n matrix
 		double *h_A = (double *)malloc(m * n * sizeof(double));
@@ -71,11 +70,11 @@ namespace svd {
 		double *d_S;            gpuErrchk(cudaMalloc(&d_S,  min(m, n) * sizeof(double)));
 
 		// --- CUDA SVD initialization
-		cusolveSafeCall(cusolverDnDgesvd_bufferSize(solver_handle, m, n, &lwork));
+		cusolveSafeCall(cusolverDnDgesvd_bufferSize(handle, m, n, &lwork));
 		gpuErrchk(cudaMalloc(&work, lwork * sizeof(double)));
 
 		// --- CUDA SVD execution
-		cusolveSafeCall(cusolverDnDgesvd(solver_handle, 'A', 'A', m, n, d_A, m, d_S, d_U, m, d_V, n, work, lwork, NULL, info));
+		cusolveSafeCall(cusolverDnDgesvd(handle, 'A', 'A', m, n, d_A, m, d_S, d_U, m, d_V, n, work, lwork, NULL, info));
 		int info_h = 0;  gpuErrchk(cudaMemcpy(&info_h, info, sizeof(int), cudaMemcpyDeviceToHost));
 		if (info_h != 0) std::cout   << "Unsuccessful SVD execution\n\n";
 
@@ -102,7 +101,7 @@ namespace svd {
 				printf("V[%i,%i]=%f\n",i,j,h_V[j*n + i]);
 		}
 
-		cusolverDnDestroy(solver_handle);
+		cusolverDnDestroy(handle);
 
 		return 0;
 	}
@@ -125,7 +124,7 @@ namespace svd {
 						double *rwork,
 						int *info ) {
 		//cusolverDnHandle_t, signed char, signed char, int, int, double, int, double, double, int, double, int, double, int, double, int
-		return RunSvd(handle,
+		return svd_fit(handle,
 			jobu,
 			jobvt,
 			m,
@@ -179,7 +178,7 @@ namespace svd {
 						double *rwork,
 						int *info );
 
-	template int RunSvd<float>(
+	template int svd_fit<float>(
 			cusolverDnHandle_t handle,
 						signed char jobu,
 						signed char jobvt,
@@ -198,7 +197,7 @@ namespace svd {
 						int *info );
 
 	template int
-	RunSvd<double>(
+	svd_fit<double>(
 			cusolverDnHandle_t handle,
 						signed char jobu,
 						signed char jobvt,

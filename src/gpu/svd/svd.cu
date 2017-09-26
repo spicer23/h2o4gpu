@@ -14,7 +14,7 @@
 #include <cusolverDn.h>
 #include <cuda_runtime_api.h>
 
-#include "Utilities.cuh"
+#include "../matrix/utilities.cuh"
 
 /********/
 /* MAIN */

@@ -121,7 +121,7 @@ CPU_MTX_OBJ=\
 CPU_PRJ_OBJ=\
 	$(OBJDIR)/cpu/projector/projector_cgls.o \
 	$(OBJDIR)/cpu/projector/projector_direct_dense.o
-CPU_OBJ=$(OBJDIR)/cpu/h2o4gpuglm.o $(OBJDIR)/cpu/elastic_net_ptr.o $(OBJDIR)/cpu/h2o4gpukmeans.o
+CPU_OBJ=$(OBJDIR)/cpu/h2o4gpuglm.o $(OBJDIR)/cpu/elastic_net_ptr.o $(OBJDIR)/cpu/h2o4gpukmeans.o  $(OBJDIR)/cpu/matrix_operations.o 
 
 H2O4GPUKMEANS_HDR=
 
@@ -160,6 +160,7 @@ GPU_OBJ=$(OBJDIR)/gpu/kmeans/kmeans_h2o4gpu.o \
 	$(OBJDIR)/gpu/p2pbwcheck.o  \
 	$(OBJDIR)/gpu/bwcheck.o \
 	$(OBJDIR)/gpu/elastic_net_ptr.o \
+	$(OBJDIR)/gpu/matrix_operations.o \
 	$(OBJDIR)/common/logger.o
 
 # Set vpath for build
@@ -233,6 +234,8 @@ $(OBJDIR)/cpu/%.o: %.cpp $(CPU_HDR) | $(OBJDIR)/cpu Makefile config2.mk
 $(OBJDIR)/cpu/elastic_net_ptr.o: common/elastic_net_ptr.cpp common/elastic_net_ptr.h $(H2O4GPU_HDR) $(GSL_HDR) | $(OBJDIR)/common Makefile config2.mk
 	$(CXX) -Iinclude -Icommon/include $< $(CXXFLAGS) -c -o $@ 
 
+$(OBJDIR)/cpu/matrix_operations.o: common/matrix_operations.cpp common/matrix_operations.h $(H2O4GPU_HDR) $(GSL_HDR) | $(OBJDIR)/common Makefile config2.mk
+	$(CXX) -Iinclude -Icommon/include $< $(CXXFLAGS) -c -o $@ 
 
 # H2O4GPU GPU objects
 $(OBJDIR)/gpu/h2o4gpu_link.o: $(GPU_OBJ) $(GPU_MTX_OBJ) $(GPU_PRJ_OBJ) | $(OBJDIR) Makefile config2.mk
@@ -266,6 +269,9 @@ $(OBJDIR)/gpu/kmeans/kmeans_h2o4gpu.o: gpu/kmeans/kmeans_h2o4gpu.cu $(GPU_KMEANS
 	$(CUXX) -Iinclude -Igpu/include $< $(CUFLAGS) -dc -o $@
 
 $(OBJDIR)/gpu/elastic_net_ptr.o: common/elastic_net_ptr.cpp common/elastic_net_ptr.h $(H2O4GPU_HDR) $(GSL_HDR) | $(OBJDIR)/common Makefile config2.mk
+	$(CXX) $(CXXFLAGS) $(CUDFLAGS)  -L$(CUDA_HOME)/lib64 -I$(CUDA_HOME)/include -Iinclude -Icommon/include $< $(CXXFLAGS) $(CUDFLAGS) -c -o $@
+
+$(OBJDIR)/gpu/matrix_operations.o: common/matrix_operations.cpp common/matrix_operations.h $(H2O4GPU_HDR) $(GSL_HDR) | $(OBJDIR)/common Makefile config2.mk
 	$(CXX) $(CXXFLAGS) $(CUDFLAGS)  -L$(CUDA_HOME)/lib64 -I$(CUDA_HOME)/include -Iinclude -Icommon/include $< $(CXXFLAGS) $(CUDFLAGS) -c -o $@
 
 $(OBJDIR)/common/logger.o: common/logger.cpp common/logger.h | $(OBJDIR)/common Makefile config2.mk

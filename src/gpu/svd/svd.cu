@@ -128,17 +128,17 @@ namespace svd {
 			jobvt,
 			m,
 			n,
-			*A,
+			A,
 			lda,
-			*S,
-			*U,
+			S,
+			U,
 			ldu,
-			*VT,
+			VT,
 			ldvt,
-			*work,
+			work,
 			lwork,
-			*rwork,
-			*info );
+			rwork,
+			info );
 	}
 
 	template int makePtr_dense<float>(
@@ -246,17 +246,17 @@ int make_ptr_float_svd(
 			jobvt,
 			m,
 			n,
-			*A,
+			A,
 			lda,
-			*S,
-			*U,
+			S,
+			U,
 			ldu,
-			*VT,
+			VT,
 			ldvt,
-			*work,
+			work,
 			lwork,
-			*rwork,
-			*info );
+			rwork,
+			info );
 }
 
 int make_ptr_double_svd(
@@ -282,17 +282,17 @@ int make_ptr_double_svd(
 			jobvt,
 			m,
 			n,
-			*A,
+			A,
 			lda,
-			*S,
-			*U,
+			S,
+			U,
 			ldu,
-			*VT,
+			VT,
 			ldvt,
-			*work,
+			work,
 			lwork,
-			*rwork,
-			*info );
+			rwork,
+			info );
 }
 
 #ifdef __cplusplus

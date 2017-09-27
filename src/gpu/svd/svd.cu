@@ -36,15 +36,11 @@ namespace svd {
 			double *rwork,
 			int *info ){
 
-	//    // --- gesvd only supports m >= n
-	//    // --- column major memory ordering
-	//
-	//    const int m = 7;
-	//    const int n = 5;
-	//
-	//    // --- cuSOLVE input/output parameters/arrays
-	//    int lwork = 0;
-	//    int *info;           gpuErrchk(cudaMalloc(&info,          sizeof(int)));
+	    // --- gesvd only supports m >= n
+	    // --- column major memory ordering
+
+		// --- cuSOLVE input/output parameters/arrays
+		gpuErrchk(cudaMalloc(&info, sizeof(int)));
 
 		// --- CUDA solver initialization
 		cusolverDnCreate(&handle);

@@ -102,7 +102,8 @@ namespace svd {
 		return 0;
 	}
 
-	int makePtr_dense(
+	//This fxn might not be needed, but good to have just in case we have <float> or <double> cases.
+	int makePtr(
 			cusolverDnHandle_t handle,
 						signed char jobu,
 						signed char jobvt,
@@ -164,7 +165,7 @@ int make_ptr_svd(
 					int lwork,
 					double *rwork,
 					int *info ) {
-  return svd::makePtr_dense(
+  return svd::makePtr(
 		  	handle,
 			jobu,
 			jobvt,

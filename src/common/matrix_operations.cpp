@@ -111,8 +111,9 @@ double SVDPtr_fit(int sourceDev, int datatype, int sharedA,
 				DEBUG_FPRINTF(fil, "Done moving data to the GPU. Took %g secs\n",
 						t1 - t0);
 
-				///////////////////////////////////////////////////
-				// BEGIN SVD
+
+				//SVD
+				cout << "Starting svd" << endl;
 				A_.svd1();
 		}
 		return 0;

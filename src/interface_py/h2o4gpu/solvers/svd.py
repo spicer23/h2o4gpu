@@ -326,11 +326,8 @@ class SVDH2O(object):
             print(train_x.dtype)
             sys.stdout.flush()
             return a
-        '''
-        int sourceDev, int datatype, int sharedA,
-			int nThreads, int gpu_id, int nGPUs, int totalnGPUs, const char ord, size_t mTrain, size_t n,
-			int standardize, int verbose, void *matrix
-        '''
+
+        print("Uploading to C")
         status = c_upload_data(
             c_int(self.source_dev),
             c_int(1),
@@ -346,9 +343,12 @@ class SVDH2O(object):
             c_int(self.verbose),
             A)
 
+        print(status)
         assert status == 0, 'Failure uploading the data'
 
         self.a = a
+
+        print("Done uploading to C")
         return a
 
     @classmethod

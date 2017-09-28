@@ -29,11 +29,6 @@ class GPUlib:
 
         return _load_svd_lib(gpu_lib_path())
 
-'''
-int sourceDev, int datatype, int sharedA,
-			int nThreads, int gpu_id, int nGPUs, int totalnGPUs, const char ord, size_t mTrain, size_t n,
-			int standardize, int verbose, void *matrix
-'''
 def _load_svd_lib(lib_path):
     """Load the underlying C/C++ SVD library using cdll.
 

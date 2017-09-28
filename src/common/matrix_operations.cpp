@@ -20,18 +20,18 @@ template<typename T>
 double SVDPtr(
 		int sourceDev, int datatype, int sharedA,
 		int nThreads, int gpu_id, int nGPUs, int totalnGPUs, const char ord, size_t mTrain, size_t n,
-		int standardize, int verbose, void *matrix) {
+		int standardize, int verbose, void *matrixPtr) {
 
 	return SVDPtr_fit(sourceDev, datatype, sharedA,
 				nThreads, gpu_id, nGPUs, totalnGPUs, ord, mTrain, n,
-				standardize, verbose, matrix);
+				standardize, verbose, matrixPtr);
 
 }
 
 template<typename T>
 double SVDPtr_fit(int sourceDev, int datatype, int sharedA,
 		int nThreads, int gpu_id, int nGPUs, int totalnGPUs, const char ord, size_t mTrain, size_t n,
-		int standardize, int verbose, void *matrix) {
+		int standardize, int verbose, void *matrixPtr) {
 
 		// number of openmp threads = number of cuda devices to use
 		#ifdef _OPENMP
@@ -52,7 +52,7 @@ double SVDPtr_fit(int sourceDev, int datatype, int sharedA,
 		#endif
 
 		int sourceme = sourceDev;
-		h2o4gpu::MatrixDense<T> Asource_(sharedA, sourceme, datatype, ord, mTrain, n, reinterpret_cast<T *>(matrix));
+		h2o4gpu::MatrixDense<T> Asource_(sharedA, sourceme, datatype, ord, mTrain, n, reinterpret_cast<T *>(matrixPtr));
 
 	#define MAX(a,b) ((a)>(b) ? (a) : (b))
 		double t = timer<double>();

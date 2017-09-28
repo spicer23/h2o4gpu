@@ -45,13 +45,13 @@ def _load_svd_lib(lib_path):
 
         h2o4gpu_svd_lib.make_ptr_double.argtypes = [
             c_int, c_int, c_int, c_int, c_int, c_int, c_int,
-            c_int, c_size_t, c_size_t, c_int, c_int, c_void_pp
+            c_int, c_size_t, c_size_t, c_int, c_int, c_double_p
         ]
         h2o4gpu_svd_lib.make_ptr_double.restype = c_int
 
         h2o4gpu_svd_lib.make_ptr_float.argtypes = [
             c_int, c_int, c_int, c_int, c_int, c_int, c_int,
-            c_int, c_size_t, c_size_t, c_int, c_int, c_void_pp
+            c_int, c_size_t, c_size_t, c_int, c_int, c_float_p
         ]
         h2o4gpu_svd_lib.make_ptr_float.restype = c_int
 

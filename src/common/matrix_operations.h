@@ -22,26 +22,26 @@ namespace h2o4gpu {
 
 double SVDPtr(int sourceDev, int datatype, int sharedA,
 			int nThreads, int gpu_id, int nGPUs, int totalnGPUs, const char ord, size_t mTrain, size_t n,
-			int standardize, int verbose, void *matrix);
+			int standardize, int verbose, void *matrixPtr);
 
 double SVDPtr_fit(int sourceDev, int datatype, int sharedA,
 			int nThreads, int gpu_id, int nGPUs, int totalnGPUs, const char ord, size_t mTrain, size_t n,
-			int standardize, int verbose, void *matrix);
+			int standardize, int verbose, void *matrixPtr);
 
 int makePtr_dense(int sourceDev, int datatype, int sharedA,
 			int nThreads, int gpu_id, int nGPUs, int totalnGPUs, const char ord, size_t mTrain, size_t n,
-			int standardize, int verbose, void *matrix);
+			int standardize, int verbose, void *matrixPtr);
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 double svd_ptr_double(int sourceDev, int datatype, int sharedA,
 		int nThreads, int gpu_id, int nGPUs, int totalnGPUs, const char ord, size_t mTrain, size_t n,
-		int standardize, int verbose, void *matrix);
+		int standardize, int verbose, void *matrixPtr);
 
 double svd_ptr_float(int sourceDev, int datatype, int sharedA,
 		int nThreads, int gpu_id, int nGPUs, int totalnGPUs, const char ord, size_t mTrain, size_t n,
-		int standardize, int verbose, void *matrix);
+		int standardize, int verbose, void *matrixPtr);
 
 #ifdef __cplusplus
 }

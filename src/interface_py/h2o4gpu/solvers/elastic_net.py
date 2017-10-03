@@ -655,6 +655,7 @@ class ElasticNetH2O(object):
 
 #call elastic net in C backend
         c_elastic_net(
+            c_int("elasticnet"),
             c_int(self._family),
             c_int(do_predict),
             c_int(source_dev),

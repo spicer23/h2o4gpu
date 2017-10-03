@@ -400,6 +400,7 @@ def upload_data(self,
         return a, b, c, d, e
 
     status = c_upload_data(
+        c_int("elasticnet"),
         c_int(self._shared_a), # pylint: disable=W0212
         c_int(self.source_me),
         c_int(source_dev),

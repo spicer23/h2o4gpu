@@ -88,7 +88,7 @@ H2O4GPULIB=\
 	$(H2O4GPUROOT)/build/cpu/matrix/matrix_sparse.o \
 	$(H2O4GPUROOT)/build/cpu/projector/projector_direct_dense.o \
 	$(H2O4GPUROOT)/build/cpu/projector/projector_cgls.o \
-	$(H2O4GPUROOT)/build/cpu/elastic_net_ptr.o
+	$(H2O4GPUROOT)/build/cpu/solver.o
 
 CUH2O4GPULIB=\
     $(H2O4GPUROOT)/build/gpu/h2o4gpu_link.o \
@@ -103,7 +103,7 @@ CUH2O4GPULIB=\
 	$(H2O4GPUROOT)/build/gpu/matrix/matrix_sparse.o \
 	$(H2O4GPUROOT)/build/gpu/projector/projector_direct_dense.o \
 	$(H2O4GPUROOT)/build/gpu/projector/projector_cgls.o \
-	$(H2O4GPUROOT)/build/gpu/elastic_net_ptr.o \
+	$(H2O4GPUROOT)/build/gpu/solver.o \
 	$(H2O4GPUROOT)/build/common/logger.o
 
 # Python-required CUDA runtime library

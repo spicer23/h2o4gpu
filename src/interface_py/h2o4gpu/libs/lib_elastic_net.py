@@ -40,14 +40,14 @@ def _load_glm_lib(lib_path):
         h2o4gpu_glm_lib = cdll.LoadLibrary(lib_path)
 
         h2o4gpu_glm_lib.make_ptr_double.argtypes = [
-            c_int, c_int, c_int, c_size_t, c_size_t, c_size_t, c_int,
+            c_int, c_int, c_int, c_int, c_size_t, c_size_t, c_size_t, c_int,
             c_double_p, c_double_p, c_double_p, c_double_p, c_double_p,
             c_void_pp, c_void_pp, c_void_pp, c_void_pp, c_void_pp
         ]
         h2o4gpu_glm_lib.make_ptr_double.restype = c_int
 
         h2o4gpu_glm_lib.make_ptr_float.argtypes = [
-            c_int, c_int, c_int, c_size_t, c_size_t, c_size_t, c_int, c_float_p,
+            c_int, c_int, c_int, c_int, c_size_t, c_size_t, c_size_t, c_int, c_float_p,
             c_float_p, c_float_p, c_float_p, c_float_p, c_void_pp, c_void_pp,
             c_void_pp, c_void_pp, c_void_pp
         ]
